@@ -149,4 +149,32 @@
       operate_ip = #{operateIp,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+  <select id="getChildAclModuleListByLevel" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_acl_module
+    where level like #{level} || '.%' --level like 0.%
+  </select>
+
+  <update id="batchUpdateLevel" parameterType="map">
+    <foreach collection="sysAclModuleList" item="sysAclModule" separator=";">
+      update  sys_acl_module
+      set level = #{sysAclModule.level}
+      where id = #{sysAclModule.id}
+    </foreach>
+  </update>
+
+  <select id="countByNameAndParentId" parameterType="map" resultType="int">
+    select count(1)
+    from sys_acl_module
+    where name = #{name}
+    <if test="parentId != null">
+      and parent_id=#{parentId}
+    </if>
+    <if test="id != null">
+      and id != #{id}
+    </if>
+  </select>
 </mapper>

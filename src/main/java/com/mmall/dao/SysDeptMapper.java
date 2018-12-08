@@ -1,5 +1,6 @@
 package com.mmall.dao;
 
+import com.mmall.model.SysAclModule;
 import com.mmall.model.SysDept;
 import org.apache.ibatis.annotations.Param;
 

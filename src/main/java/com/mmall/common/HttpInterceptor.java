@@ -25,6 +25,7 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        removeThreadLocalInfo();
     }
 
     @Override
@@ -33,5 +34,11 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
         long end = System.currentTimeMillis();
         long start = (Long) request.getAttribute(START_TIME);
         log.info("request complated. url:{}, cost:{}",url,end-start);
+
+        removeThreadLocalInfo();
+    }
+
+    public void removeThreadLocalInfo(){
+        RequestHolder.remove();
     }
 }
