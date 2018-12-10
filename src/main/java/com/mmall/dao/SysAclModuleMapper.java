@@ -1,6 +1,7 @@
 package com.mmall.dao;
 
 import com.mmall.model.SysAclModule;
+import com.mmall.model.SysDept;
 import com.mmall.param.AclModuleParam;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,6 +20,7 @@ public interface SysAclModuleMapper {
 
     int updateByPrimaryKey(SysAclModule record);
 
+    List<SysAclModule> getAllAclModule();
 
     List<SysAclModule> getChildAclModuleListByLevel(@Param("level") String level);
 

@@ -32,6 +32,7 @@ public class SysAclModuleService {
         SysAclModule aclModule = SysAclModule.builder().name(param.getName()).parentId(param.getParentId())
                 .seq(param.getSeq()).status(param.getStatus()).remark(param.getRemark()).build();
 
+        aclModule.setLevel(LevelUtil.calculateLevel(getLevel(param.getId()), param.getParentId()));
         aclModule.setOperator(RequestHolder.getCurrentUser().getUsername());
         aclModule.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         aclModule.setOperateTime(new Date());
