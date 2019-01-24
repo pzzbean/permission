@@ -29,6 +29,6 @@ public class AclModuleParam {
     @Max(value = 1, message = "权限模块状态不合法")
     private Integer status;
 
-    @Length(max = 200,message = "权限模块的备注需要在200个字符以内")
+    @Length(max = 100,message = "权限模块的备注需要在100个字符以内")
     private String remark;
 }

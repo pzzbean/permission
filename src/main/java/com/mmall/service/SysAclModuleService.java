@@ -5,7 +5,6 @@ import com.mmall.common.RequestHolder;
 import com.mmall.dao.SysAclModuleMapper;
 import com.mmall.exception.ParamException;
 import com.mmall.model.SysAclModule;
-import com.mmall.model.SysDept;
 import com.mmall.param.AclModuleParam;
 import com.mmall.util.BeanValidator;
 import com.mmall.util.IpUtil;
@@ -32,7 +31,7 @@ public class SysAclModuleService {
         SysAclModule aclModule = SysAclModule.builder().name(param.getName()).parentId(param.getParentId())
                 .seq(param.getSeq()).status(param.getStatus()).remark(param.getRemark()).build();
 
-        aclModule.setLevel(LevelUtil.calculateLevel(getLevel(param.getId()), param.getParentId()));
+        aclModule.setLevel(LevelUtil.calculateLevel(getLevel(param.getParentId()), param.getParentId()));
         aclModule.setOperator(RequestHolder.getCurrentUser().getUsername());
         aclModule.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         aclModule.setOperateTime(new Date());
@@ -51,7 +50,8 @@ public class SysAclModuleService {
 
         SysAclModule after = SysAclModule.builder().id(param.getId()).name(param.getName()).parentId(param.getParentId())
                 .seq(param.getSeq()).status(param.getStatus()).remark(param.getRemark()).build();
-        after.setLevel(LevelUtil.calculateLevel(getLevel(param.getId()), param.getParentId()));
+
+        after.setLevel(LevelUtil.calculateLevel(getLevel(param.getParentId()), param.getParentId()));
         after.setOperator(RequestHolder.getCurrentUser().getUsername());
         after.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         after.setOperateTime(new Date());
@@ -64,6 +64,7 @@ public class SysAclModuleService {
         String oldLevelPrefix = before.getLevel();
 
         if (!after.getLevel().equals(before.getLevel())){
+            System.err.println(before.getLevel());
             List<SysAclModule> aclModuleList = sysAclModuleMapper.getChildAclModuleListByLevel(before.getLevel());
             if (CollectionUtils.isNotEmpty(aclModuleList)){
                     for (SysAclModule aclModule : aclModuleList){

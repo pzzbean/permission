@@ -24,6 +24,6 @@ public class DeptParam {
     @NotNull(message = "展示顺序不可以为空")
     private Integer seq;
 
-    @Length(max = 150,message = "备注名称需要小于150个字符")
+    @Length(max = 100,message = "备注名称需要小于100个字符")
     private String remark;
 }

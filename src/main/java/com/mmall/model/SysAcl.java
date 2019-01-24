@@ -1,7 +1,14 @@
 package com.mmall.model;
 
+import lombok.*;
+
 import java.util.Date;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode(of = {"id"})
 public class SysAcl {
     private Integer id;
 
