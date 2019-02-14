@@ -11,6 +11,7 @@ import com.mmall.service.SysTreeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -52,5 +53,12 @@ public class SysAclModuleController {
     public JsonData tree(){
         List<AclModuleLevelDto> dtoList = sysTreeService.aclModuleTree();
         return JsonData.success(dtoList);
+    }
+
+    @RequestMapping("/delete.json")
+    @ResponseBody
+    public JsonData deleteAclModule(@RequestParam("id") int id){
+        sysAclModuleService.delete(id);
+        return JsonData.success();
     }
 }

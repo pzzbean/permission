@@ -246,22 +246,32 @@
 
       //绑定部门点击事件
       function bindDeptClick() {
-          $(".dept-delete").click(function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-              var deptId = $(this).attr("data-id");
-              var deptName = $(this).attr("data-name");
-              if (confirm("确定要删除部门【"+deptName+"】吗?")){
-                  //TODO：
-                  console.log("delete dept:"+deptName);
-              }
-          });
-
           $(".dept-name").click(function (e) {
               e.preventDefault();
               e.stopPropagation();
               var deptId = $(this).attr("data-id");
               handleDeptSelected(deptId);
+          });
+
+          $(".dept-delete").click(function(e){
+              e.preventDefault();
+              e.stopPropagation();
+              var deptId = $(this).attr("data-id");
+              var deptName = $(this).attr("data-name");
+              if(confirm("您确定删除["+deptName+"]部门吗?")){
+                  $.ajax({
+                      url:"/sys/dept/delete.json",
+                      data:{id:deptId},
+                      success: function(result){
+                          if(result.ret){
+                              showMessage("删除部门["+deptName+"]", "操作成功", true);
+                              loadDeptTree();
+                          }else{
+                              showMessage("删除部门["+deptName+"]", result.msg, false);
+                          }
+                      }
+                  })
+              }
           });
 
 
@@ -407,7 +417,23 @@
       });
 
       function bindUserClick(){
-          //TODO：
+          $(".user-acl").click(function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              var userId = $(this).attr("data-id");
+              $.ajax({
+                  url: "/sys/user/acls.json",
+                  data: {userId:userId},
+                  success:function(result){
+                      if(result.ret){
+                          console.log(result);
+                      }else{
+                          showMessage("获取用户权限数据", result.msg, false)
+                      }
+                  }
+              })
+          });
+
           $(".user-edit").click(function (e) {
               e.preventDefault();
               e.stopPropagation();
@@ -493,7 +519,7 @@
                     blank += "∟"
                 }
                 optionStr += Mustache.render("<option value='{{id}}'>{{name}}</option>", {id:dept.id,name:blank+dept.name});
-                if(dept.deptList && dept.deptList > 0){
+                if(dept.deptList && dept.deptList.length > 0){
                     recursiveRenderDeptSelect(dept.deptList, level + 1);
                 }
             })

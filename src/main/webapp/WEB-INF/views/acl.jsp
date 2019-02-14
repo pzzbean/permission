@@ -378,6 +378,27 @@
 
             });
 
+           $(".aclModule-delete").click(function(e){
+               e.preventDefault();
+               e.stopPropagation();
+               var aclModuleId = $(this).attr("data-id");
+               var aclModuleName = $(this).attr("data-name");
+               if(confirm("您确定删除["+aclModuleName+"]部门吗?")){
+                   $.ajax({
+                       url:"/sys/aclModule/delete.json",
+                       data:{id:aclModuleId},
+                       success: function(result){
+                           if(result.ret){
+                               showMessage("删除部门["+aclModuleName+"]", "操作成功", true);
+                               loadAclModuleTree();
+                           }else{
+                               showMessage("删除部门["+aclModuleName+"]", result.msg, false);
+                           }
+                       }
+                   })
+               }
+           });
+
 
            //编辑权限模块
            $(".aclModule-edit").click(function (e) {
@@ -496,6 +517,23 @@
        }
 
        function bindAclClick(){
+           $(".acl-role").click(function (e) {
+               e.preventDefault();
+               e.stopPropagation();
+               var aclId = $(this).attr("data-id");
+               $.ajax({
+                   url: "/sys/acl/acls.json",
+                   data: {aclId:aclId},
+                   success:function(result){
+                       if(result.ret){
+                           console.log(result);
+                       }else{
+                           showMessage("获取权限点分配的用户和角色", result.msg, false)
+                       }
+                   }
+               })
+           });
+
            $(".acl-edit").click(function(e){
                e.preventDefault();
                e.stopPropagation();
