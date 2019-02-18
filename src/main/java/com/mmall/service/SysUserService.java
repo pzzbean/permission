@@ -23,6 +23,9 @@ public class SysUserService {
     @Resource
     private SysUserMapper sysUserMapper;
 
+    @Resource
+    private SysLogService sysLogService;
+
     public void save(UserParam param){
         BeanValidator.check(param);
         if (checkTelephoneExist(param.getTelephone(), param.getId())){
@@ -43,6 +46,7 @@ public class SysUserService {
         user.setOperateTime(new Date());
         //TODO：sendEmail
         sysUserMapper.insertSelective(user);
+        sysLogService.saveUserLog(null, user);
     }
 
     public void update(UserParam param){
@@ -64,6 +68,8 @@ public class SysUserService {
         after.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         after.setOperateTime(new Date());
         sysUserMapper.updateByPrimaryKeySelective(after);
+
+        sysLogService.saveUserLog(before, after);
 
     }
 

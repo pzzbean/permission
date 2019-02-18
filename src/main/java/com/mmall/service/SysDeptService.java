@@ -7,6 +7,7 @@ import com.mmall.dao.SysDeptMapper;
 import com.mmall.dao.SysUserMapper;
 import com.mmall.exception.ParamException;
 import com.mmall.model.SysDept;
+import com.mmall.model.SysLog;
 import com.mmall.param.DeptParam;
 import com.mmall.util.BeanValidator;
 import com.mmall.util.IpUtil;
@@ -28,6 +29,9 @@ public class SysDeptService {
     @Resource
     private SysUserMapper sysUserMapper;
 
+    @Resource
+    private SysLogService sysLogService;
+
     public void save(DeptParam param){
         BeanValidator.check(param);
         if (checkExist(param.getParentId(),param.getName(),param.getId())){
@@ -43,6 +47,7 @@ public class SysDeptService {
         dept.setOperateTime(new Date());
 
         sysDeptMapper.insertSelective(dept);
+        sysLogService.saveDeptLog(null, dept);
     }
 
     public void update(DeptParam param){
@@ -64,6 +69,7 @@ public class SysDeptService {
         after.setOperateTime(new Date());
 
         updateWithChild(before, after);
+        sysLogService.saveDeptLog(before, after);
     }
 
     @Transactional
