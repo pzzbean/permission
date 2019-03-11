@@ -19,6 +19,7 @@
   </properties>
 
   <dependencies>
+    <!--********   单元测试  ********  -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -26,7 +27,7 @@
       <scope>test</scope>
     </dependency>
 
-    <!--********   springMVC   ********  -->
+    <!--********   spring   ********  -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-beans</artifactId>
@@ -39,6 +40,7 @@
       <version>${springframework.version}</version>
     </dependency>
 
+    <!--********   springMVC + Spring web   ********  -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
@@ -85,14 +87,14 @@
       <version>5.1.30</version>
     </dependency>
 
-    <!--********   lombok  ********  -->
+    <!--********   lombok  ******** 用于生成@Getter @Setter @ToString 注解等来简化开发-->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.16.12</version>
     </dependency>
 
-    <!--  logback  -->
+    <!--  logback  用于日志的打印和输出-->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-core</artifactId>
@@ -142,7 +144,7 @@
       <version>1.10</version>
     </dependency>
 
-    <!--********   jackson 转换工具依赖  ********  -->
+    <!--********   jackson 转换工具依赖  ******** guava是谷歌封装的一套工具包  实用 -->
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-guava</artifactId>
@@ -161,6 +163,7 @@
       <version>1.9.13</version>
     </dependency>
 
+    <!-- apache封装的公共工具包-->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
@@ -173,7 +176,7 @@
       <version>1.4</version>
     </dependency>
 
-    <!-- redis -->
+    <!-- redis依赖包 -->
     <dependency>
       <groupId>redis.clients</groupId>
       <artifactId>jedis</artifactId>
