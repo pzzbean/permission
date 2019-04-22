@@ -4,6 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+        <!-- 加载外部的properties配置文件 -->
        <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
             <property name="ignoreUnresolvablePlaceholders" value="true" />
             <property name="locations">
@@ -13,8 +14,10 @@
             </property>
        </bean>
 
+        <!--导入缓存相关的xml配置文件-->
         <import resource="redis.xml" />
 
+        <!--德鲁伊数据库连接池相关配置-->
        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
            <property name="driverClassName" value="${db.driverClassName}" />
            <property name="url" value="${db.url}" />
@@ -27,6 +30,8 @@
            <property name="filters" value="stat,wall" />
        </bean>
 
+        <!--pring整合mybatis相关配置-->
+        <!--配置数据源和mapper映射文件-->
         <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
             <property name="configLocation" value="classpath:mybatis-config.xml"/>
             <property name="dataSource" ref="dataSource"/>
